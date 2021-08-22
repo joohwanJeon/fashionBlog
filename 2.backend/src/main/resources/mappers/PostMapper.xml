@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hwanjin.hizini.domain.dao.PostMapper">
+	<insert id="createPost" parameterType="PostDTO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO HWANJIN.POST (
+			TITLE 
+			, USER_ID
+			, `LIKE`
+			, INSERT_DTM
+		) VALUES (
+			#{title}
+			, #{userId}
+			, #{like}
+			, NOW()
+		);
+
+	</insert>
+
+	<insert id="createImage" parameterType="ImageDTo">
+		INSERT INTO HWANJIN.IMAGE_META_INFO (
+			POST_ID
+			, FILE_NAME
+			, FILE_PATH
+			, INSERT_DTM
+		) VALUES (
+			#{postId}
+			, #{image.fileName}
+			, #{image.filePath}
+			, now()		
+		)
+	</insert>
+
+	<select id="selectPost" resultType="PostDTO">
+		SELECT 	
+				ID
+				, TITLE
+				, USER_ID
+				, `LIKE`
+				, INSERT_DTM
+				, UPDATE_DTM
+				, DELETE_DTM 
+		FROM 
+				HWANJIN.POST
+		WHERE 
+				1 = 1
+				<if test="id != 0">
+					AND ID = #{id}
+				</if>
+				<if test="title != null">
+					AND title = #{title}
+				</if>				
+				<if test="userId != null">
+					AND user_id = #{userId}
+				</if>
+				<if test="count != 0">
+		LIMIT #{count}
+				</if>
+	</select> 
+	
+	<update id="updatePost" parameterType="PostDTO">
+		UPDATE	
+	</update>
+	
+	<update id="deletePost">
+		
+	</update>
+</mapper>
